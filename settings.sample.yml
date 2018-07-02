@@ -1,0 +1,9 @@
+toggl_api_token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx # Yours can be found at https://toggl.com/app/profile
+workspace_id: 00000000 # Yours can be found using '$ get_client_ids.rb'
+user_name: user_name # It is used for filename and dirname
+output_filename_format: '%{user_name}_%{client_name}_%{yearmonth}.pdf'
+clients: # List of your clients of your reports
+  # company1: 00000001
+  # company2: 00000002
+  # company3: 00000003
+  # company4: 00000004
