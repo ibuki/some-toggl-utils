@@ -2,9 +2,14 @@
 
 require 'togglv8'
 require 'yaml'
+require 'settingslogic'
 
-Settings = YAML.load_file('settings.yml').freeze
-api = TogglV8::API.new(Settings['toggl_api_token'])
+# Initialize
+class Settings < Settingslogic
+  source "#{__dir__}/settings.yml"
+end
+
+api = TogglV8::API.new(Settings.toggl_api_token)
 
 workspace_id = api.clients.first['wid']
 puts "workspace_id: #{workspace_id}"
