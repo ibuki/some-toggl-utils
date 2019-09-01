@@ -2,6 +2,7 @@
 
 class Summary
   attr_reader :beginning_date, :end_date
+
   def initialize(beginning_date, end_date)
     @beginning_date = beginning_date
     @end_date = end_date
@@ -14,26 +15,12 @@ class Summary
       .reverse
   end
 
-  def client_times_as_text
-    puts "先週(#{beginning_date_str}〜#{end_date_str})の活動時間"
-
-    client_times.each do |client_name, time|
-      print_entry(client_name, time)
-    end
-    print_entry('total', summary[:total_grand])
+  def total_grand
+    summary[:total_grand]
   end
 
   def summary
     JSON.parse(conn.get(endpoint, default_params).body).with_indifferent_access
-  end
-
-  def minutize(msec)
-    minute = msec / 1000 / 60
-    format('%3d時間 %2d分', minute / 60, minute % 60)
-  end
-
-  def print_entry(name, msec)
-    puts "#{name.ljust(15)}: #{minutize(msec)}"
   end
 
   def endpoint
@@ -62,5 +49,9 @@ class Summary
 
   def end_date_str
     end_date.strftime('%Y-%m-%d')
+  end
+
+  def decorate
+    SummaryDecorator.new(self)
   end
 end

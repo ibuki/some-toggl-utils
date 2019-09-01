@@ -12,6 +12,6 @@ class Status < Thor
   def durations
     beginning_date = 1.month.ago.beginning_of_month
     end_date = 1.month.ago.end_of_month
-    puts Summary.new(beginning_date, end_date).client_times_as_text
+    puts Summary.new(beginning_date, end_date).decorate.client_times_as_text
   end
 end
