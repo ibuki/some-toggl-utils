@@ -25,7 +25,7 @@ bundle install
 4. Get your client_ids and update your settings.yml
 
 ```bash
-thor init:get_client_ids >> config/settings.yml
+thor init:fetch_client_ids >> config/settings.yml
 ```
 
 5. Run the script and get your report
