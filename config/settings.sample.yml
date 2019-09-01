@@ -2,7 +2,7 @@ toggl_api_token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx # Yours can be found at https:
 user_name: user_name # It is used for filename and dirname
 output_filename_format: '%{user_name}_%{client_name}_%{yearmonth}.pdf'
 
-# workspace_id: 00000000 # Yours can be found using '$ thor init:fetch_client_ids'
+# workspace_id: 00000000 # Yours can be found using '$ thor status:list_clients'
 # clients: # List of your clients of your reports
 #   company1: 00000001
 #   company2: 00000002
