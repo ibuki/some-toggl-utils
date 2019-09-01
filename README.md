@@ -9,10 +9,11 @@ Because of Togglv8 reports don't work, Faraday is also required.
 1. Get your api token from Toggl.
 https://toggl.com/app/profile
 
-2. Set your api token at the file `settings.yml`
+2. Set your api token at the file `config/settings.yml`
 
 ```bash
-vi settings.yml
+cp config/settings.sample.yml config/settings.yml
+vi config/settings.yml
 ```
 
 3. Install dependancies
@@ -21,25 +22,19 @@ vi settings.yml
 bundle install
 ```
 
-4. Get your client_ids
+4. Get your client_ids and update your settings.yml
 
 ```bash
-bundle exec ruby get_client_ids.rb
+thor init:get_client_ids >> config/settings.yml
 ```
 
-5. Update your settings using results of above script
+5. Run the script and get your report
 
 ```bash
-vi settings.yml
+thor expot:summaries
 ```
 
-6. Run the script and get your report
-
-```bash
-bundle exec ruby get_last_month_summaries.rb
-```
-
-7. Enjoy the results
+6. Enjoy the results
 
 ```bash
 open results
