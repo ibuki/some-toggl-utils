@@ -1,8 +1,8 @@
-# Toggl summary downloader
+# Some Toggl Utils
 
 This script gets the last month summary pdf for each client.
 
-Because of Togglv8 reports don't work, Faraday is also required.
+Because of Togglv8 reports function doesn't work, Faraday is also required.
 
 # Usage
 
