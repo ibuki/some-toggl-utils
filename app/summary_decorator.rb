@@ -24,7 +24,7 @@ class SummaryDecorator
   end
 
   def message(client_name, msec)
-    <<-MESSAGE.gsub(/^\s+/, "")
+    <<-MESSAGE.gsub(/^\s+/, '')
       #{client_name}
       お疲れ様です！月半ばですので稼働時間の報告を送ります。
       #{beginning_date_str}〜#{end_date_str}の稼働時間は#{minutize(msec)}です。
@@ -34,7 +34,7 @@ class SummaryDecorator
 
   def minutize(msec)
     minute = msec / 1000 / 60
-    format('%d時間%d分', minute / 60, minute % 60)
+    format('%<hour>d時間%<minute>d分', hour: minute / 60, minute: minute % 60)
   end
 
   def hourize(msec)
