@@ -9,7 +9,7 @@ class SummaryDecorator
   end
 
   def client_times_as_text
-    puts "先週(#{beginning_date_str}〜#{end_date_str})の活動時間"
+    puts "#{beginning_date_str}〜#{end_date_str}の活動時間"
 
     client_times.each do |client_name, msec|
       print_entry(client_name, msec)

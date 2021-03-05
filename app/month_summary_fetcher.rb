@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class MonthSummaryFetcher
-  attr_reader :client_id, :month
+  attr_reader :workspace_id, :client_id, :month
 
-  def initialize(client_id, month)
+  def initialize(workspace_id, client_id, month)
+    @workspace_id = workspace_id
     @client_id = client_id
     @month = month
   end
@@ -14,7 +15,8 @@ class MonthSummaryFetcher
 
   def params
     {
-      workspace_id: Settings.workspace_id,
+      workspace_id: workspace_id,
+      user_ids: Settings.user_id,
       user_agent: 'chrome',
       since: month.beginning_of_month.strftime('%Y-%m-%d'),
       until: month.end_of_month.strftime('%Y-%m-%d'),
