@@ -4,32 +4,36 @@ require 'pry'
 
 class ClientsFetcher
   def as_yml
-    <<~YML
-      workspace_id: #{first_wid}
-      clients:
-      #{clients_yml}
-    YML
+    {
+      user_id: me['id'],
+      workspaces: workspace_ids.map do |workspace_id|
+        {
+          workspace_id: workspace_id,
+          clients: clients_filter_by_workspace_id(workspace_id).pluck('name', 'id').to_h
+        }
+      end
+    }.deep_stringify_keys.to_yaml
   end
 
   private
 
-  def clients_yml
-    client_names_and_ids.map { |name, id| client_yml_row(name, id) }.join("\n")
+  def workspace_ids
+    me['workspaces'].pluck('id')
   end
 
-  def client_yml_row(name, id)
-    "  #{name}: #{id}"
+  def clients_filter_by_workspace_id(wid)
+    clients.select { |client| client['wid'] == wid }
   end
 
-  def client_names_and_ids
-    @client_names_and_ids ||= api.clients.select { |client| client['wid'] == first_wid }.pluck('name', 'id')
+  def clients
+    @clients ||= api.clients
+  end
+
+  def me
+    @me ||= api.me
   end
 
   def api
     @api ||= TogglV8::API.new(Settings.toggl_api_token)
-  end
-
-  def first_wid
-    @first_wid ||= api.clients.first['wid']
   end
 end

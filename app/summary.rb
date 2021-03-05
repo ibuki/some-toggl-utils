@@ -9,18 +9,24 @@ class Summary
   end
 
   def client_times
-    summary[:data]
-      .each_with_object(Hash.new(0)) { |project, obj| obj[project[:title][:client].tr(' ', '').downcase] += project[:time] }
-      .sort_by(&:last)
-      .reverse
+    summaries.flat_map do |summary|
+      summary[:data]
+        .each_with_object(Hash.new(0)) { |project, obj| obj[project[:title][:client].tr(' ', '').downcase] += project[:time] }
+        .sort_by(&:last)
+        .reverse
+    end
   end
 
   def total_grand
-    summary[:total_grand]
+    summaries.map do |summary|
+      summary[:total_grand]
+    end.compact.sum
   end
 
-  def summary
-    JSON.parse(conn.get(endpoint, default_params).body).with_indifferent_access
+  def summaries
+    Settings.workspaces.map do |workspace|
+      JSON.parse(conn.get(endpoint, params_for_workspace(workspace.workspace_id)).body).with_indifferent_access
+    end
   end
 
   def endpoint
@@ -34,9 +40,10 @@ class Summary
     end
   end
 
-  def default_params
+  def params_for_workspace(workspace_id)
     {
-      workspace_id: Settings.workspace_id,
+      workspace_id: workspace_id,
+      user_ids: Settings.user_id,
       user_agent: 'chrome',
       since: beginning_date_str,
       until: end_date_str,
