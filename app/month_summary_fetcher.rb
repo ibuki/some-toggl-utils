@@ -29,7 +29,7 @@ class MonthSummaryFetcher
   end
 
   def conn
-    @conn ||= Faraday.new('https://toggl.com') do |faraday|
+    @conn ||= Faraday.new('https://api.track.toggl.com') do |faraday|
       faraday.adapter Faraday.default_adapter
       faraday.basic_auth(Settings.toggl_api_token, 'api_token')
     end
